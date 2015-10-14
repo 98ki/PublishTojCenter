@@ -1,80 +1,5 @@
 #gradle-publish
 
-##Introduction
-This project includes some gradle scripts that can publish gradle project to JCenter.
-
-`bintray.gradle`: A script to publish an android gradle project to JCenter.
-
-`build.gradle`: A demo about how to use it.
-
-`gradle.properties`: The properties that will be used in `bintray.gradle`. You are needed to copy this file into your library project and configure the values of these properties.
-
-##How To Use
-###1. Save bintray user and API Key infos
-First, you should have one bintray account,([bintray.com](https://bintray.com/)) and need save the account user name and API Key info to your `.gradle` folder. If you havent change the `GRADLE_USER_HOME` position, it will be under your User folder. In this folder, add the follow infos to `gradle.properties` file, create it if it doesn`t exist.
-```
-BINTRAY_USER=bintray account name
-BINTRAY_KEY=bintray API Key
-```
-If your OS is Windows, then, the path will be `C:\Documents and Settings\YourName\.gradle` for XP, and `C:\Users\YourName\.gradle` for WIN7+.
-###2. modify `build.gradle` in your library module
-Add the dependencies section into `build.gradle` in your library if it doesn't already exist:
-```
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:3.1.1"
-    }
-}
-
-```
-
-Then add it into the bottom of the `build.gradle` file:
-
-    apply from: 'https://raw.githubusercontent.com/msdx/gradle-publish/master/bintray.gradle'
-
-###3. setup `gradle.properties` in your library module
-Copy the `gradle.properties`(which is in this project, not the one we modified in step 1) file to your library module, Click [Here](https://github.com/msdx/gradle-publish/blob/master/gradle.properties) to copy it.
-Then setup it as your needed. Follow is an example,
-```
-PROJ_GROUP=com.philcalvin
-PROJ_VERSION=1.1.0
-PROJ_NAME=iconbutton
-PROJ_WEBSITEURL=https://github.com/pnc/IconButton
-PROJ_ISSUETRACKERURL=
-PROJ_VCSURL=git@github.com:pnc/IconButton.git
-PROJ_DESCRIPTION=android icon button
-PROJ_ARTIFACTID=com-phillipcalvin-iconbutton
-
-DEVELOPER_ID=pnc
-DEVELOPER_NAME=Phil Calvin
-DEVELOPER_EMAIL=phil@philcalvin.com
-```
-The final useage for this example in Android Studio will be:
-```
-dependencies {
-    compile 'com.philcalvin:com-phillipcalvin-iconbutton:1.1.0'
-}
-```
-You can see, the format will be `PROJ_GROUP:PROJ_ARTIFACTID:PROJ_VERSION`.
-###4. run publish command
-Execute `gradle bintrayUpload` to publish artifacts to bintray.com.
-```
-gradle bintrayUpload
-```
-
-Execute `gradle artifactoryPublish` to publish SNAPSHOT version to oss.jfrog.org.
-```
-gradle artifactoryPublish
-```
-###5. add library to Jcenter
-Send a request to bintray.com about adding the library to Jcenter, after the request be approved, others can use your library by one line code in their `build.gradle` files.
-
----
-
 ##介绍
 本项目包含一些Gradle脚本及属性文件，用于使用Gradle发布项目.
 
@@ -150,4 +75,3 @@ gradle artifactoryPublish
 
 *注:* 当前版本不会再在通过 Android Studio 运行项目时引发错误。
 
-使用方法见博客：http://blog.csdn.net/maosidiaoxian/article/details/43148643
